@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+
+<head>
+ <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<title>Tickets</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" th:href="@{/}">HELPDESK</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+          
+              <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link"  th:href="@{/admin/users}"> <i class="fas fa-user-friends"></i> Utilisateurs <span class="sr-only"></span></a>
+              </li>
+              <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link" th:href="@{/admin/bugs}"> <i class="fa-solid fa-bug"></i></i> Tickets <span class="sr-only"></span></a>
+              </li>
+              
+              
+              <li class="nav-item active" sec:authorize="hasRole('USER')">
+                <a class="nav-link" th:href="@{/client/tickets}"> <i class="fa-solid fa-bug"></i></i> Tickets <span class="sr-only"></span></a>
+              </li>
+              
+               <li class="nav-item active" sec:authorize="hasRole('DEV')">
+                <a class="nav-link" th:href="@{/developper/bugs}"> <i class="fa-solid fa-bug"></i></i> Tickets <span class="sr-only"></span></a>
+              </li>
+              
+               <li class="nav-item active" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/profile}"> <i class="fa-solid fa-user"></i></i> Profile <span class="sr-only"></span></a>
+              </li>
+              <li class="nav-item active" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/logout}"> <i class="fas fa-sign-out-alt"></i> Logout <span class="sr-only"></span></a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+     <div class="container mt-4 w-50">
+        <form th:action="@{/update_profile}" th:object="${user}" method="post">
+         <input type="text" name="id" hidden th:field="*{id}" />
+            <div class="form-group">
+              <label for="env">Nom</label>
+              <input name="nom" th:field="*{nom}" type="text" class="form-control"  placeholder="Nom">
+            </div>
+            <div class="form-group">
+              <label for="env">Prenom</label>
+              <input name="prenom" th:field="*{prenom}" type="text" class="form-control" placeholder="Prenom">
+            </div>
+            <div class="form-group">
+                <label for="logi">Username</label>
+                <input name="username" th:field="*{username}" type="text" class="form-control"  placeholder="Username">
+            </div>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+            <a  th:href="@{/}" type="submit" class="btn btn-primary">Annuler</a  >
+          </form >
+    </div>
+</body>
+
+</html>
